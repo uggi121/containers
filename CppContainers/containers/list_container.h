@@ -101,3 +101,4 @@ list_container<T>::~list_container() {
 		delete head;
 	}
 }
+
