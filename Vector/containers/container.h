@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 using size_type = int;
 
