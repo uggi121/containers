@@ -15,7 +15,10 @@ public:
 };
 
 template <typename T>
-list_node<T>::~list_node() {}
+list_node<T>::~list_node() {
+	next = nullptr;
+	prev = nullptr;
+}
 
 template <typename T>
 list_node<T>::list_node(const list_node<T>& lst) {
@@ -65,14 +68,14 @@ private:
 	size_type current_size;
 };
 
-template<typename T>
+template <typename T>
 list_container<T>::list_container(const list_container<T>& lst) {
 	head = lst.head;
 	tail = lst.tail;
 	current_size = lst.current_size
 }
 
-template<typename T>
+template <typename T>
 list_container<T>::list_container(list_container<T>&& lst) {
 	head = lst.head;
 	tail = lst.tail;
@@ -81,4 +84,20 @@ list_container<T>::list_container(list_container<T>&& lst) {
 	lst.head = nullptr;
 	lst.tail = nullptr;
 	lst.current_size = 0;
+}
+
+template <typename T>
+list_container<T>::~list_container() {
+	// Traverse the linked list from the head and delete nodes sequentially
+	while (head && head != tail) {
+		auto next_node = head->next;
+		next_node->prev = nullptr;
+
+		delete head;
+		head = next_node;
+	}
+
+	if (head) {
+		delete head;
+	}
 }
