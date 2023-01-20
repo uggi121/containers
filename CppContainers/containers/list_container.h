@@ -102,3 +102,7 @@ list_container<T>::~list_container() {
 	}
 }
 
+template <typename T>
+size_type list_container<T>::size() {
+	return current_size;
+}
