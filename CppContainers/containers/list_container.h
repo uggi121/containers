@@ -5,14 +5,34 @@ template <typename T>
 class list_node {
 public:
 	explicit list_node(T item) : item{ item }, next{ nullptr }, prev{ nullptr } {}
-	explicit list_node(const T& item);
-	explicit list_node(T&& item);
+	explicit list_node(const list_node<T>& lst);
+	explicit list_node(list_node<T>&& lst);
 
 	T item;
 	list_node* next;
 	list_node* prev;
 	~list_node();
 };
+
+template <typename T>
+list_node<T>::~list_node() {}
+
+template <typename T>
+list_node<T>::list_node(const list_node<T>& lst) {
+	item = lst.item;
+	next = lst.next;
+	prev = lst.prev;
+}
+
+template <typename T>
+list_node<T>::list_node(list_node<T>&& lst) {
+	item = lst.item;
+	next = lst.next;
+	prev = lst.prev;
+
+	lst.next = nullptr;
+	lst.prev = nullptr;
+}
 
 template <typename T>
 class list_container : public sequence_container<T> {
@@ -44,3 +64,21 @@ private:
 	list_node* tail;
 	size_type current_size;
 };
+
+template<typename T>
+list_container<T>::list_container(const list_container<T>& lst) {
+	head = lst.head;
+	tail = lst.tail;
+	current_size = lst.current_size
+}
+
+template<typename T>
+list_container<T>::list_container(list_container<T>&& lst) {
+	head = lst.head;
+	tail = lst.tail;
+	current_size = lst.current_size;
+
+	lst.head = nullptr;
+	lst.tail = nullptr;
+	lst.current_size = 0;
+}
